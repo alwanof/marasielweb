@@ -15,14 +15,15 @@
 
 Route::group(['prefix' => 'drivers','middleware' => ['locator']],function () {
     Route::get('form/{country?}', 'DriversController@index')->name('drivers.index');
+    Route::get('/', function (){
+        abort(403);
+    })->name('drivers.zero');
     Route::post('/', 'DriversController@store')->name('drivers.store');
     Route::get('/go/test','DriversController@test');
 
 
 });
-Route::get('/', function (){
-    abort(403);
-})->name('drivers.zero');
+
 Route::group(['prefix' => 'drivers','middleware' => ['auth']],function () {
     Route::get('sheet/{active?}','DriversController@sheet')->name('drivers.sheet');
 

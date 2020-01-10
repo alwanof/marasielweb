@@ -17,11 +17,10 @@ use App\User;
 
 Route::group(['middleware' => ['locator']], function () {
     Route::get('/', 'WelcomeController@index')->name('start');
+
 });
 
-Route::get('/foo/moo', function(){
-    return 909;
-});
+
 
 
 Route::get('test', 'UserController@testo');
