@@ -30,6 +30,7 @@
                         <th>
                             <span class="badge badge-info">+{{drivers.total}}</span>
                         </th>
+                        <th></th>
                         <th>{{ local[lang+".leads"]["fname"] }}</th>
                         <th>{{ local[lang+".leads"]["lname"] }}</th>
                         <th>{{ local[lang+".leads"]["email"] }}</th>
@@ -51,7 +52,10 @@
                             </button>
 
                         </td>
-                        <td>{{ driver.fname }}</td>
+                        <td><img :src="driver.avatar" class="img-thumbnail rounded-circle" width="200"></td>
+                        <td>
+                            {{ driver.fname }}
+                        </td>
                         <td>{{driver.lname}}</td>
                         <td>{{driver.email}}</td>
                         <td>{{driver.phone}}</td>

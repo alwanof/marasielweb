@@ -1,6 +1,7 @@
 I make some update
 .env
 *Modules/Drivers/Resources/assets/js/croppie/upload-demo.php
+*/public/modules/drivers/js/croppie/upload-demo.php
 Modules/Drivers/Resources/assets/js/croppie/cropConfig.js
 marasiel.com/resources/js/app.js
 public/assets/cropConfig.js

@@ -13,8 +13,9 @@
 @endsection
 @section('content')
     <!-- Default box -->
-    <driversinfo-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfo-component>
+    <driversinfo-component :pencount="{{$pendingDrivers}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfo-component>
     <hr>
+
     <sheet-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" :acl="{{json_encode($acl)}}" :roles="{{ $roles }}" ></sheet-component>
 
 

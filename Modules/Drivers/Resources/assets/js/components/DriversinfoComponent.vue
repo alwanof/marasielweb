@@ -54,7 +54,7 @@
                 <!-- small box -->
                 <div class="small-box bg-danger">
                     <div class="inner">
-                        <h3>+3</h3>
+                        <h3>+{{pencount}}</h3>
 
                         <p><i class="fas fa-cog fa-spin px-2 text-light" v-show="loading"></i>
                             {{ local[lang+".leads"]["pending"] }}
@@ -76,7 +76,7 @@
 
     export default {
         name: "DriversStaticsComponent",
-        props: ["auth","lang"],
+        props: ["pencount","auth","lang"],
         data() {
             return {
                 path: CONFIG.PATH,

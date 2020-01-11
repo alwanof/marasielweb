@@ -2135,7 +2135,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DriversStaticsComponent",
-  props: ["auth", "lang"],
+  props: ["pencount", "auth", "lang"],
   data: function data() {
     return {
       path: _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].PATH,
@@ -2298,6 +2298,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _resources_js_app__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../resources/js/app */ "./resources/js/app.js");
+//
+//
+//
+//
 //
 //
 //
@@ -22513,7 +22517,7 @@ var render = function() {
       _c("div", { staticClass: "col-lg-3 col-6" }, [
         _c("div", { staticClass: "small-box bg-danger" }, [
           _c("div", { staticClass: "inner" }, [
-            _c("h3", [_vm._v("+3")]),
+            _c("h3", [_vm._v("+" + _vm._s(_vm.pencount))]),
             _vm._v(" "),
             _c("p", [
               _c("i", {
@@ -22849,6 +22853,8 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
+                _c("th"),
+                _vm._v(" "),
                 _c("th", [
                   _vm._v(_vm._s(_vm.local[_vm.lang + ".leads"]["fname"]))
                 ]),
@@ -22919,7 +22925,20 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(driver.fname))]),
+                  _c("td", [
+                    _c("img", {
+                      staticClass: "img-thumbnail rounded-circle",
+                      attrs: { src: driver.avatar, width: "200" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      "\n                        " +
+                        _vm._s(driver.fname) +
+                        "\n                    "
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(driver.lname))]),
                   _vm._v(" "),
@@ -37733,6 +37752,7 @@ __webpack_require__(/*! ../../Modules/Drivers/Resources/assets/js/app */ "./Modu
 
 var CONFIG = {
   API_URL: 'https://marasiel.com/public/api/',
+  //API_URL: 'http://localhost/marasielo/public/api/',
   PATH: '/public',
   LANG: _lang_vue_translations_json__WEBPACK_IMPORTED_MODULE_0__
 };

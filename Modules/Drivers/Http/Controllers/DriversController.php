@@ -79,13 +79,17 @@ class DriversController extends Controller
 
     public function sheet($active = 0)
     {
+
         $roles = Role::all();
 
         $acl = [
             'manage_drivers' => (Gate::allows('manage_drivers')) ? true : false,
             'make_drivers_approved' => (Gate::allows('make_drivers_approved')) ? true : false,
         ];
-        return view('drivers::sheet', compact(['roles', 'acl']));
+        $pendingDrivers=Driver::where('active',0)->count();
+
+
+        return view('drivers::sheet', compact(['roles', 'acl','pendingDrivers']));
     }
 
     public function test()

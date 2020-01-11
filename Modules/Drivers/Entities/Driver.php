@@ -3,8 +3,17 @@
 namespace Modules\Drivers\Entities;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Driver extends Model
 {
     protected $guarded = [];
+    protected $appends = ['avatar'];
+
+    public function getAvatarAttribute()
+    {
+        $path = Storage::exists('/public/modules/drivers/uploads/drivers/' . $this->hash . '.jpg');
+        $avatar = ($path) ? asset('modules/drivers/uploads/drivers/' . $this->hash . '.jpg') : asset('modules/drivers/uploads/drivers/0.jpg');
+        return $avatar;
+    }
 }
