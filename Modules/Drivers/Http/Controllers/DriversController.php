@@ -68,7 +68,7 @@ class DriversController extends Controller
             event(new NewDriverWasCreated($data));
 
             return back()->with([
-                'alert' => __('drivers::leads.lead_craeted')
+                'alert' => __('leads.lead_created')
             ]);
         } catch (Exception $e) {
             return back()->with([

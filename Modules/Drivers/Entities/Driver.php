@@ -12,7 +12,7 @@ class Driver extends Model
 
     public function getAvatarAttribute()
     {
-        $path = Storage::exists('/public/modules/drivers/uploads/drivers/' . $this->hash . '.jpg');
+        $path = file_exists(public_path().'/modules/drivers/uploads/drivers/' . $this->hash . '.jpg');
         $avatar = ($path) ? asset('modules/drivers/uploads/drivers/' . $this->hash . '.jpg') : asset('modules/drivers/uploads/drivers/0.jpg');
         return $avatar;
     }

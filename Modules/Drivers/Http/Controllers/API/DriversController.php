@@ -35,7 +35,7 @@ class DriversController extends Controller
         //return $driver;
         $driver->active = ($driver->active == 0) ? 1 : 0;
         $driver->save();
-        //$this->leadWelcomeEmail($lead);
+        $this->leadWelcomeEmail($driver);
         return 1;
     }
 

@@ -52,7 +52,7 @@
                             </button>
 
                         </td>
-                        <td><img :src="driver.avatar" class="img-thumbnail rounded-circle" width="200"></td>
+                        <td><img :src="driver.avatar" class="rounded-circle" width="42"></td>
                         <td>
                             {{ driver.fname }}
                         </td>
@@ -61,7 +61,7 @@
                         <td>{{driver.phone}}</td>
                         <td>{{driver.city}}</td>
                         <td>{{driver.country}}</td>
-                        <td>{{driver.vtype}}</td>
+                        <td>{{(driver.vtype=='0')?local[lang+".leads"]["vtypelist"][0]:local[lang+".leads"]["vtypelist"][0]}}</td>
                         <td>{{driver.vmodel}}</td>
                         <td>{{driver.plateno}}</td>
                     </tr>
@@ -161,6 +161,7 @@
                     lname:driver.lname,
                     vmodel:driver.vmodel,
                     vtype:driver.vtype,
+                    profile_URL:driver.avatar,
                     country:driver.country,
 
                 }

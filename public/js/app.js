@@ -2450,6 +2450,7 @@ __webpack_require__.r(__webpack_exports__);
         lname: driver.lname,
         vmodel: driver.vmodel,
         vtype: driver.vtype,
+        profile_URL: driver.avatar,
         country: driver.country
       };
       axios.get(_resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL + "drivers/apigate/set/" + driver.id + "/approved?api_token=" + this.auth.api_token).then(function () {
@@ -22927,8 +22928,8 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [
                     _c("img", {
-                      staticClass: "img-thumbnail rounded-circle",
-                      attrs: { src: driver.avatar, width: "200" }
+                      staticClass: "rounded-circle",
+                      attrs: { src: driver.avatar, width: "42" }
                     })
                   ]),
                   _vm._v(" "),
@@ -22950,7 +22951,15 @@ var render = function() {
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(driver.country))]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(driver.vtype))]),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(
+                        driver.vtype == "0"
+                          ? _vm.local[_vm.lang + ".leads"]["vtypelist"][0]
+                          : _vm.local[_vm.lang + ".leads"]["vtypelist"][0]
+                      )
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("td", [_vm._v(_vm._s(driver.vmodel))]),
                   _vm._v(" "),

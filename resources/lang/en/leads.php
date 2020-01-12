@@ -39,7 +39,7 @@ return [
         'whatsapp'=>'+90 531 8927413',
         'email'=>'drivers@marasiel.com'
     ],
-    'lead_craeted' => 'We have been received your application, our team will contact you as soon as possible!',
+    'lead_created' => 'We have been received your application, our team will contact you as soon as possible!',
     'filesUpload' => [
         'Vehicle Document',
         'Driving License',
