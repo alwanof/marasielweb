@@ -61,7 +61,8 @@
                         <td>{{driver.phone}}</td>
                         <td>{{driver.city}}</td>
                         <td>{{driver.country}}</td>
-                        <td>{{(driver.vtype=='0')?local[lang+".leads"]["vtypelist"][0]:local[lang+".leads"]["vtypelist"][0]}}</td>
+                        <td>{{(driver.vtype=='0')?local[lang+".leads"]["vtypelist"][0]:local[lang+".leads"]["vtypelist"][0]
+                            }}</td>
                         <td>{{driver.vmodel}}</td>
                         <td>{{driver.plateno}}</td>
                     </tr>

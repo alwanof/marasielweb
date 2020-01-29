@@ -2376,6 +2376,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SheetComponent",
@@ -37760,7 +37761,8 @@ Vue.component('settings-component', __webpack_require__(/*! ./components/Setting
 __webpack_require__(/*! ../../Modules/Drivers/Resources/assets/js/app */ "./Modules/Drivers/Resources/assets/js/app.js");
 
 var CONFIG = {
-  API_URL: 'https://marasiel.com/public/api/',
+  //API_URL: 'https://marasiel.com/public/api/',
+  API_URL: 'http://marasielapp.com/main/public/api/',
   //API_URL: 'http://localhost/marasielo/public/api/',
   PATH: '/public',
   LANG: _lang_vue_translations_json__WEBPACK_IMPORTED_MODULE_0__

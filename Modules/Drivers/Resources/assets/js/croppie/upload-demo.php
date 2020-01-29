@@ -1,7 +1,7 @@
 <?php
 
 //upload.php
-$base_url = 'http://localhost/marasielo/public';
+$base_url = 'http://localhost/marasielo555/public';
 $abs_path='C:\xampp\htdocs\marasielo\public';
 if (isset($_POST["image"])) {
     $data = $_POST["image"];

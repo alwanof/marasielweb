@@ -77,7 +77,7 @@
         docRef.onSnapshot({includeMetadataChanges:true},snap => {
             snap.docs.forEach(doc => {
 
-                if(doc.data().drivePos){
+                if(doc.data().drivePos && doc.data().vehicle_brand){
                     var uluru = { lat: doc.data().drivePos._long, lng: doc.data().drivePos._lat };
                     var image={
                         url:'marker.png',

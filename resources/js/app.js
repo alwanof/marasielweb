@@ -23,7 +23,8 @@ require('../../Modules/Drivers/Resources/assets/js/app');
 
 
 const CONFIG = {
-    API_URL: 'https://marasiel.com/public/api/',
+    //API_URL: 'https://marasiel.com/public/api/',
+    API_URL: 'http://marasielapp.com/main/public/api/',
     //API_URL: 'http://localhost/marasielo/public/api/',
     PATH: '/public',
     LANG: translations
