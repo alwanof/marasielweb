@@ -11,9 +11,9 @@ return [
         'beourdriver'=>'Be our driver',
         'terms'=>'Terms',
         'privacypolicy'=>'Privacy Policy',
-        'contact'
+        'languages'=>'Languages'
     ],
-    'title'=>'Marasiel App.',
+    'title'=>'Marasiel App',
 
 
 ];

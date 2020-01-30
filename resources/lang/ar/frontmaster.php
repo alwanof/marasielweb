@@ -11,9 +11,9 @@ return [
         'beourdriver'=>'كن احد سائقينا',
         'terms'=>'الشروط و الاحكام',
         'privacypolicy'=>'سياسة الخصوصية',
-        'contact'
+        'languages'=>'اللغات'
     ],
-    'title'=>'Marasiel App.',
+    'title'=>'Marasiel App',
 
 
 ];

@@ -1,15 +1,18 @@
 @extends('drivers::layouts.master')
-
+@section('page-title')
+    {{__('leads.title')}}
+@endsection
 @section('body')
-    <section class="row cover align-items-center">
 
-    </section>
-    <div class="container bg-light p-5 shadow mb-5 rounded" style="margin-top: -128px;">
+    <img class="img-fluid" src="{{asset('theme/img/slider2.jpg')}}" alt="Marasiel" title="Marasiel" style="margin: 82px auto;">
+
+    <div class="container bg-light p-5 shadow mb-5 rounded mt-1">
         @include('alert')
         <div class="row">
             <div class="col-lg-6">
-                <div class="h1">
-                    <i class="flag-icon flag-icon-{{session('flag')}}"></i> {{__('leads.title')}}
+                <div class="h1 from-heading">
+                    <h2>{{__('leads.title')}}</h2>
+                    <i class="flag-icon flag-icon-{{session('flag')}}"></i>
                 </div>
                 <hr>
 
@@ -27,9 +30,9 @@
                                 <div class="card-body py-4 text-center">
                                     <div class="cropU">
                                         <div id="placeholder">
-                                            <img src="{{Module::asset('drivers:img/0.png')}}" class="img-thumbnail rounded-circle" />
+                                            <img src="{{Module::asset('drivers:img/avatar.png')}}" class="img-thumbnail rounded-circle" />
                                         </div>
-                                        <label class="btn btn-primary mt-2">
+                                        <label class="btn btn-blue mt-2">
                                             {{__('leads.browse')}} <input type="file" class="custom-file-input upload_image" name="upload_image" id="upload_image" accept="image/*" hidden>
                                         </label>
 
@@ -40,13 +43,13 @@
 
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="inputFName">{{__('leads.fname')}}</label>
+                            <label class="form-label-style" for="inputFName">{{__('leads.fname')}}</label>
                             <input type="text" name="fname" value="{{old('fname')}}" class="form-control" id="inputFName" required>
-                            <label for="inputLName">{{__('leads.lname')}}</label>
+                            <label class="form-label-style" for="inputLName">{{__('leads.lname')}}</label>
                             <input type="text" name="lname" value="{{old('lname')}}" class="form-control" id="inputLName" required>
-                            <label for="inputEmail4">{{__('leads.email')}}</label>
+                            <label class="form-label-style" for="inputEmail4">{{__('leads.email')}}</label>
                             <input type="email" name="email" value="{{old('email')}}" class="form-control" id="inputEmail4" required>
-                            <label for="inputPhone">{{__('leads.mobile')}}</label>
+                            <label class="form-label-style" for="inputPhone">{{__('leads.mobile')}}</label>
                             <div class="input-group">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroupPrepend">+{{ Session('phonecode') }}</span>
@@ -60,8 +63,8 @@
                     <div class="form-row">
 
                         <div class="form-group col-md-6">
-                            <label for="inputCountry4">{{__('leads.country')}}</label>
-                            {{Session('iso')}}
+                            <label class="form-label-style" for="inputCountry4">{{__('leads.country')}}</label>
+
                             <select name="country" id="inputCountry4" class="form-control" required>
                                 <option value="" disabled selected>{{__('leads.select_country')}}</option>
                                 <option value="SD" {{(Session('iso') == 'SD' ? 'selected':'')}}>SUDAN</option>
@@ -69,13 +72,13 @@
                         </div>
                         <div class="form-group col-md-6">
 
-                            <label for="inputPCity4">{{__('leads.city')}}</label>
+                            <label class="form-label-style" for="inputPCity4">{{__('leads.city')}}</label>
                             <input type="text" name="city" value="{{old('city')}}" class="form-control" id="inputPCity4" required>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group col-md-4">
-                            <label for="inputVType4">{{__('leads.vtype')}}</label>
+                            <label class="form-label-style" for="inputVType4">{{__('leads.vtype')}}</label>
                             <select name="vtype" id="inputVType4" class="form-control" required>
                                 <option value="" selected="" disabled="">{{__('leads.vtype')}}</option>
                                 <option value="1" {{(old('vtype') == '1' ? 'selected':'')}}>{{__('leads.vtypelist')[0]}}</option>
@@ -86,28 +89,28 @@
                         </div>
                         <div class="form-group col-md-4">
 
-                            <label for="inputCarmodel4">{{__('leads.carmodel')}}</label>
+                            <label class="form-label-style" for="inputCarmodel4">{{__('leads.carmodel')}}</label>
                             <input type="text" name="carmodel" value="{{old('carmodel')}}" class="form-control" id="inputCarmodel4" required>
                         </div>
                         <div class="form-group col-md-4">
 
-                            <label for="inputPlateno4">{{__('leads.plateno')}}</label>
+                            <label class="form-label-style" for="inputPlateno4">{{__('leads.plateno')}}</label>
                             <input type="text" name="plateno" value="{{old('plateno')}}" class="form-control" id="inputPlateno4" required>
                         </div>
                     </div>
                     <hr >
 
-                    <button type="submit" class="btn btn-lg btn-primary text-white">{{__('leads.apply')}}</button>
+                    <button type="submit" class="btn btn-lg btn-yellow text-white">{{__('leads.apply')}}</button>
                 </form>
             </div>
             <div class="col-lg-6">
-                <div class="text-center text-primary">
+                <div class="text-center text-yellow">
                     <i class="fas fa-clipboard-check fa-3x mt-5"></i>
                     <div class="h2">{{__('leads.requirments.title')}}</div>
-                    <hr class="border-primary" width="50%">
+                    <hr class="border-yellow" width="50%">
                 </div>
 
-                <ul style="list-style: none;"  class="mt-2">
+                <ul style="list-style: none;margin:0 37px; {{ session('locale') == 'ar' ? 'direction: rtl;text-align: right;' : '' }}"  class="mt-2">
                     <li class="mb-2">
                         <i class="fas fa-check"></i>
                         {{__('leads.requirments.content')[0]}}
@@ -130,7 +133,7 @@
                     </li>
 
                 </ul>
-                <p class="leads text-center text-primary">
+                <p class="leads text-center text-yellow">
                     {{__('leads.support.text')}}<br>
                     {{__('leads.support.email')}}
                 </p>
