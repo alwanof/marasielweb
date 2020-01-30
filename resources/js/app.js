@@ -10,6 +10,7 @@ window.Vue = require('vue');
 
 import translations from '../lang/vue-translations.json'
 //php artisan lang:js resources/lang/vue-translations.json --json
+//ez6f60y3mjyc
 
 Vue.component('pagination', require('laravel-vue-pagination'));
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);

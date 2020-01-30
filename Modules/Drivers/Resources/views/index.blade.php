@@ -30,7 +30,7 @@
                                 <div class="card-body py-4 text-center">
                                     <div class="cropU">
                                         <div id="placeholder">
-                                            <img src="{{Module::asset('drivers:img/avatar.png')}}" class="img-thumbnail rounded-circle" />
+                                            <img src="{{Module::asset('drivers:img/0.png')}}" class="img-thumbnail rounded-circle" />
                                         </div>
                                         <label class="btn btn-blue mt-2">
                                             {{__('leads.browse')}} <input type="file" class="custom-file-input upload_image" name="upload_image" id="upload_image" accept="image/*" hidden>
