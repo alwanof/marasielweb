@@ -27,6 +27,9 @@ Route::get('test', 'UserController@testo');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/formm', 'HomeController@formm')->name('formm');
+Route::post('/savee', 'HomeController@savee')->name('savee');
+
 Route::get('lang/{locale}', 'HomeController@lang')->name('lang');
 
 Route::prefix('admin')->group(function () {

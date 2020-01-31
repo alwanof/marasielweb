@@ -32,8 +32,6 @@ const CONFIG = {
 
 }
 
-
-
 export default CONFIG;
 
 const app = new Vue({

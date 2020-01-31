@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Configuration;
+use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -14,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',['except'=>['lang']]);
+        $this->middleware('auth',['except'=>['lang','formm','savee']]);
     }
 
     /**
@@ -43,5 +45,16 @@ class HomeController extends Controller
         App::setLocale($locale);
         session()->put('locale', $locale);
         return redirect()->back();
+    }
+
+    public function formm(){
+        return view('formm');
+    }
+
+    public function savee(Request $request){
+        $set=new Configuration;
+        $set->name='utf';
+        $set->value=$request->body;
+        $set->save();
     }
 }
