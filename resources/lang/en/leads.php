@@ -12,6 +12,7 @@ return [
     'mobile' => 'Mobile',
     'city' => 'City',
     'address' => 'Address',
+    'details'=>'Details',
     'carmodel' => 'Vehicle Model',
     'vtype' => 'Vehicle Type',
     'vtypelist' => ['Taxi', 'Motocycle'],

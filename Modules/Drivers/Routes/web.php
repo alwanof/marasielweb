@@ -26,5 +26,6 @@ Route::group(['prefix' => 'drivers','middleware' => ['locator']],function () {
 
 Route::group(['prefix' => 'drivers','middleware' => ['auth']],function () {
     Route::get('sheet/{active?}','DriversController@sheet')->name('drivers.sheet');
+    Route::get('active','DriversController@active')->name('drivers.active');
 
 });

@@ -92,6 +92,21 @@ class DriversController extends Controller
         return view('drivers::sheet', compact(['roles', 'acl','pendingDrivers']));
     }
 
+    public function active()
+    {
+
+        //$roles = Role::all();
+
+        $acl = [
+            'manage_drivers' => (Gate::allows('manage_drivers')) ? true : false,
+            'make_drivers_approved' => (Gate::allows('make_drivers_approved')) ? true : false,
+        ];
+
+
+
+        return view('drivers::active', compact(['acl']));
+    }
+
     public function test()
     {
         $user = User::find(1);

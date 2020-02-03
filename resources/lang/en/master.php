@@ -11,6 +11,8 @@ return [
     'select-language' => 'Select Language',
     'modules'=>'App. Modules',
     'desktop'=>'Desktop',
-    'drivers'=>'Drivers'
+    'drivers'=>'Drivers',
+    'pending-drivers'=>'Pending Drivers',
+    'active-drivers'=>'Active Drivers',
 
 ];

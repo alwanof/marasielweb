@@ -179,11 +179,26 @@
                         </li>
                         @endcan
                         @can('access-drivers')
-                        <li class="nav-item">
-                            <a href="{{ route('drivers.sheet') }}" class="nav-link ">
+                        <li class="nav-item has-treeview menu-open">
+                            <a href="#" class="nav-link ">
                                 <i class="fas fa-taxi"></i>
                                 <p>{{ __('master.drivers') }}</p>
+                                <i class="right fas fa-angle-left"></i>
                             </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ route('drivers.sheet') }}" class="nav-link">
+                                        <i class="far fa-circle text-warning nav-icon"></i>
+                                        <p>{{ __('master.pending-drivers') }}</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('drivers.active') }}" class="nav-link">
+                                        <i class="far fa-circle text-success nav-icon"></i>
+                                        <p>{{ __('master.active-drivers') }}</p>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                             @endcan
                     </ul>
