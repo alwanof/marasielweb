@@ -13,7 +13,6 @@
 @endsection
 @section('content')
     <!-- Small boxes (Stat box) -->
-  <ordersinfo-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}"></ordersinfo-component>
     <!-- Default box -->
     <div class="card">
         <div class="card-header">

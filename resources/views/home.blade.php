@@ -14,62 +14,20 @@
 @section('content')
   <!-- Default box -->
   <div class="container">
-      <!-- Small boxes (Stat box) -->
-      <div class="row">
-          <div class="col-lg-4">
-              <!-- small box -->
-              <div class="small-box bg-info">
-                  <div class="inner">
-                      <h3>{{$data['allNoti']->count()}}</h3>
-
-                      <p>{{__('noticenter.noti')}}</p>
-                  </div>
-                  <div class="icon">
-                      <i class="ion ion-checkmark"></i>
-                  </div>
-
-              </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-4">
-              <!-- small box -->
-              <div class="small-box bg-success">
-                  <div class="inner">
-                      <h3>{{$data['newNoti']->count()}}</h3>
-
-                      <p>{{__('noticenter.new-noti')}}</p>
-                  </div>
-                  <div class="icon">
-                      <i class="ion ion-pie-graph"></i>
-                  </div>
-              </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-4">
-              <!-- small box -->
-              <div class="small-box bg-warning">
-                  <div class="inner">
-                      <h3>{{$data['oldNoti']->count()}}</h3>
-
-                      <p>{{__('noticenter.read-noti')}}</p>
-                  </div>
-                  <div class="icon">
-
-                      <i class="ion ion-eye"></i>
-                  </div>
-              </div>
-          </div>
-          <!-- ./col -->
+      <driversinfo-component :pencount="{{$pendingDrivers}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfo-component>
+      <ordersinfo-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}"></ordersinfo-component>
 
 
-      </div>
+
       <!-- /.row -->
       <div class="row">
           <div class="col-lg-6">
               <div class="card">
                   <div class="card-header">
-                      <h3 class="card-title text-danger">{{__('noticenter.new')}}</h3>
 
+                      <button type="button" class="btn btn-danger btn-sm">
+                          {{__('noticenter.new')}} <span class="badge badge-light">{{$data['newNoti']->count()}}</span>
+                      </button>
                       <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                               <i class="fas fa-minus"></i></button>
@@ -91,8 +49,10 @@
           <div class="col-lg-6">
               <div class="card">
                   <div class="card-header">
-                      <h3 class="card-title">{{__('noticenter.streams')}}</h3>
 
+                      <button type="button" class="btn btn-info btn-sm">
+                          {{__('noticenter.streams')}} <span class="badge badge-light">{{$data['allNoti']->count()}}</span>
+                      </button>
                       <div class="card-tools">
                           <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
                               <i class="fas fa-minus"></i></button>

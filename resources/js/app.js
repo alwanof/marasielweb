@@ -6,8 +6,15 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+const firebase = require("firebase");
+require("firebase/firestore");
+firebase.initializeApp({
+    apiKey: 'AIzaSyAjTxseFpz_COb6D-NIp_jItFJzQetivDE',
+    projectId: 'marasieltotil'
+});
+const db = firebase.firestore();
 
+window.Vue = require('vue');
 import translations from '../lang/vue-translations.json'
 //php artisan lang:js resources/lang/vue-translations.json --json
 //ez6f60y3mjyc
@@ -28,7 +35,8 @@ const CONFIG = {
     API_URL: 'http://marasielapp.com/main/public/api/',
     //API_URL: 'http://localhost/marasielo/public/api/',
     PATH: '/public',
-    LANG: translations
+    LANG: translations,
+    DB:db
 
 }
 

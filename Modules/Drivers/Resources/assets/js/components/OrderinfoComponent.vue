@@ -5,7 +5,7 @@
                 <!-- small box -->
                 <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>+{{orders.done}} <small>| {{orders.doneSum}}£</small> </h3>
+                        <h3>+{{orders.done}}<small>| {{orders.doneSum}}£</small> </h3>
 
                         <p><i class="fas fa-cog fa-spin px-2 text-light" v-show="loading"></i>
                             {{ local[lang+".orders"]["completedorders"] }}
@@ -98,22 +98,63 @@
             };
         },
         created() {
-            this.getResults();
+            this.getDone();
+            this.getProgress();
+            this.getUcanceled();
+            this.getAcanceled();
+            this.getBounce();
 
         },
 
         methods: {
-            getResults() {
+            getDone() {
                 this.loading = true;
-
-                axios
-                    .post(
-                        " https://us-central1-marasieltotil.cloudfunctions.net/ordersStatics "
-                    )
-                    .then(res => {
-                        this.orders = res.data;
-                        this.loading = false;
+                const query=CONFIG.DB.collection('orders');
+                query.where('status','==','3').onSnapshot(snap => {
+                    this.orders.done=snap.size;
+                    let total=0;
+                    snap.forEach(doc => {
+                        total = total + Number(doc.data().price);
                     });
+                    this.orders.doneSum=total;
+                    this.loading = false;
+                });
+            },
+            getProgress() {
+                this.loading = true;
+                const query=CONFIG.DB.collection('orders');
+                query.where('status','in',[0,'1']).onSnapshot(snap => {
+                    this.orders.progress=snap.size;
+
+                    this.loading = false;
+                });
+            },
+            getUcanceled() {
+                this.loading = true;
+                const query=CONFIG.DB.collection('orders');
+                query.where('status','==','7').onSnapshot(snap => {
+                    this.orders.canceledByUser=snap.size;
+
+                    this.loading = false;
+                });
+            },
+            getAcanceled() {
+                this.loading = true;
+                const query=CONFIG.DB.collection('orders');
+                query.where('status','==',2).onSnapshot(snap => {
+                    this.orders.canceledByApp=snap.size;
+
+                    this.loading = false;
+                });
+            },
+            getBounce() {
+                this.loading = true;
+                const query=CONFIG.DB.collection('orders');
+                query.where('status','==','6').onSnapshot(snap => {
+                    this.orders.bounce=snap.size;
+
+                    this.loading = false;
+                });
             },
 
         }

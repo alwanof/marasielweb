@@ -6,6 +6,9 @@ use App\Configuration;
 use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Gate;
+use Modules\Drivers\Entities\Driver;
+use Spatie\Permission\Models\Role;
 
 class HomeController extends Controller
 {
@@ -34,10 +37,17 @@ class HomeController extends Controller
             'oldNoti'=>auth()->user()->readNotifications->take($limit),
         ];
 
-        //return $data;
+
+        $roles = Role::all();
+
+        $acl = [
+            'manage_drivers' => (Gate::allows('manage_drivers')) ? true : false,
+            'make_drivers_approved' => (Gate::allows('make_drivers_approved')) ? true : false,
+        ];
+        $pendingDrivers=Driver::where('active',0)->count();
 
         auth()->user()->unreadNotifications->markAsRead();
-        return view('home',compact(['data']));
+        return view('home',compact(['data','roles','acl','pendingDrivers']));
     }
 
     public function lang($locale)

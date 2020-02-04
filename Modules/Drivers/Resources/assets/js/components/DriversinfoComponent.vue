@@ -3,16 +3,16 @@
         <div class="row">
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-info">
+                <div class="small-box bg-success">
                     <div class="inner">
-                        <h3>+{{drivers[0]}}</h3>
+                        <h3>+{{allDriversSize}}</h3>
 
                         <p><i class="fas fa-cog fa-spin px-2 text-light" v-show="loading"></i>
                             {{ local[lang+".leads"]["alldrivers"] }}
                         </p>
                     </div>
                     <div class="icon">
-                        <i class="ion ion-bag"></i>
+                        <i class="ion ion-checkmark"></i>
                     </div>
 
                 </div>
@@ -20,9 +20,9 @@
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-success">
+                <div class="small-box bg-info">
                     <div class="inner">
-                        <h3>+{{drivers[1]}}</h3>
+                        <h3>+{{motorDriversSize}}</h3>
 
                         <p><i class="fas fa-cog fa-spin px-2 text-light" v-show="loading"></i>
                             {{ local[lang+".leads"]["motor"] }}
@@ -30,15 +30,16 @@
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
+
                     </div>
                 </div>
             </div>
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-warning text-light">
+                <div class="small-box bg-dark text-light">
                     <div class="inner">
-                        <h3>+{{drivers[2]}}</h3>
+                        <h3>+{{taxiDriversSize}}</h3>
 
                         <p><i class="fas fa-cog fa-spin px-2 text-light" v-show="loading"></i>
                             {{ local[lang+".leads"]["taxi"] }}
@@ -52,7 +53,7 @@
             <!-- ./col -->
             <div class="col-lg-3 col-6">
                 <!-- small box -->
-                <div class="small-box bg-danger">
+                <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>+{{pencount}}</h3>
 
@@ -82,6 +83,9 @@
                 path: CONFIG.PATH,
                 loading: false,
                 drivers: [],
+                allDriversSize:0,
+                motorDriversSize:0,
+                taxiDriversSize:0,
                 local: CONFIG.LANG,
                 keywords: null,
                 errors: [],
@@ -89,22 +93,39 @@
             };
         },
         created() {
-            this.getResults();
+            this.getDriversSize();
+            this.getMotorsSize();
+            this.getTaxiSize();
 
         },
 
         methods: {
-            getResults() {
+            getDriversSize() {
                 this.loading = true;
+                const query=CONFIG.DB.collection('users');
+                query.where('vehicle_type','in',[0,1]).onSnapshot(snap => {
+                    this.allDriversSize=snap.size;
+                    this.loading = false;
+                });
 
-                axios
-                    .post(
-                        " https://us-central1-marasieltotil.cloudfunctions.net/driversStatics "
-                    )
-                    .then(res => {
-                        this.drivers = res.data;
-                        this.loading = false;
-                    });
+            },
+            getMotorsSize() {
+                this.loading = true;
+                const query=CONFIG.DB.collection('users');
+                query.where('vehicle_type','==',0).onSnapshot(snap => {
+                    this.motorDriversSize=snap.size;
+                    this.loading = false;
+                });
+
+            },
+            getTaxiSize() {
+                this.loading = true;
+                const query=CONFIG.DB.collection('users');
+                query.where('vehicle_type','==',1).onSnapshot(snap => {
+                    this.taxiDriversSize=snap.size;
+                    this.loading = false;
+                });
+
             },
 
         }
