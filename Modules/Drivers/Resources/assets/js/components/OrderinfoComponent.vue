@@ -156,7 +156,6 @@
                     this.loading = false;
                 });
             },
-
         }
     };
 </script>

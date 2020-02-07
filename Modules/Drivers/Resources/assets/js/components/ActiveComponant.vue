@@ -52,22 +52,82 @@
                                 <a href="#" @click="details=!details">...</a>
                             </div>
                         </td>
-                        <td>+++</td>
+                        <td>
+                            <button type="button" @click="addCredit(driver)"  class="btn btn-sm btn-dark" data-toggle="modal" data-target="#staticBackdrop">
+                                Add Credit
+                            </button>
+                        </td>
                     </tr>
                     </tbody>
                 </table>
                 <hr />
                 <div class="p-2">
-
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
                 </div>
             </div>
         </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="creditDialog" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">
+                            <i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i>Add Credit
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input type="hidden" v-model="driver && driver.userID">
+                        <div class="input-group mt-3">
+                            <div class="input-group-prepend">
+                  <span class="input-group-text">
+                    <i class="fas fa-dollar-sign"></i>
+                  </span>
+                            </div>
+                            <input
+                                type="email"
+                                v-model="newCredit"
+                                class="form-control"
+                                placeholder="Enter Ammount.."
+                                required
+                            />
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" @click="doAddCredit"  class="btn btn-primary">Add Credit</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
+
+
 </template>
 
 <script>
     import CONFIG from "../../../../../../resources/js/app";
-
+    function randomStr(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
     export default {
         name: "ActiveComponent",
         props: ["auth", "lang","acl"],
@@ -77,6 +137,8 @@
                 loading: false,
                 details:false,
                 drivers: [],
+                driver:null,
+                newCredit:0,
                 local: CONFIG.LANG,
                 keywords: null,
                 errors: [],
@@ -89,46 +151,52 @@
 
         },
         watch: {
-            keywords(after, before) {
+            /*keywords(after, before) {
                 if (this.keywords.length > 2 || this.keywords.length === 0) {
                     //this.search();
                 }
-            }
+            }*/
         },
         methods: {
             getResults() {
 
                 this.loading = true;
-
-                axios
-                    .post(
-                        "https://us-central1-marasieltotil.cloudfunctions.net/getAllDrivers"
-                    )
-                    .then(res => {
-                        this.drivers = res.data;
-                        console.log(res.data[0].drivePos._latitude);
-                        this.loading = false;
+                    const pageSize = 3;
+                    const query=CONFIG.DB.collection('users');
+                    query.where('vehicle_type','in',[0,1]).onSnapshot(snap => {
+                    snap.forEach(doc=>{
+                        this.drivers.push(doc.data());
                     });
+                    this.loading = false;
+                });
             },
             search(page) {
-                this.loading = true;
+                /*this.loading = true;
                 if (typeof page === "undefined") {
                     page = 1;
-                }
-                /*axios
-                    .get(
-                        CONFIG.API_URL +
-                        "drivers/apigate/search/drivers?page=" +
-                        page +
-                        "&keywords=" +
-                        this.keywords +
-                        "&api_token=" +
-                        this.auth.api_token
-                    )
-                    .then(res => {
-                        this.drivers = res.data;
-                        this.loading = false;
-                    });*/
+                }*/
+
+            },
+            addCredit(driver){
+              this.driver=driver;
+                $("#creditDialog").modal("show");
+            },
+            doAddCredit(){
+                this.loading = true;
+                var today = new Date();
+                const query=CONFIG.DB.collection('users')
+                .doc('Oj1z83UIm8ReDw13izX55IDVUh63').collection('transactions').doc(randomStr(18))
+                .set({
+                    date: today,
+                    desc:'Deposit',
+                    type: "12",
+                    value:this.newCredit
+                });
+                this.loading = false;
+                $("#creditDialog").modal("hide");
+                toastr["success"]('Creadit has been added','ok');
+
+
             },
 
 

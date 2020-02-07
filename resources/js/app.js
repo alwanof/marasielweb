@@ -29,7 +29,7 @@ Vue.component('settings-component', require('./components/SettingsComponent.vue'
 
 require('../../Modules/Drivers/Resources/assets/js/app');
 
-
+//ez6f60y3mjyc
 const CONFIG = {
     //API_URL: 'https://marasiel.com/public/api/',
     API_URL: 'http://marasielapp.com/main/public/api/',

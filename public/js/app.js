@@ -54842,6 +54842,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+function randomStr(length) {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "ActiveComponent",
@@ -54852,6 +54917,8 @@ __webpack_require__.r(__webpack_exports__);
       loading: false,
       details: false,
       drivers: [],
+      driver: null,
+      newCredit: 0,
       local: _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].LANG,
       keywords: null,
       errors: []
@@ -54861,43 +54928,48 @@ __webpack_require__.r(__webpack_exports__);
     this.getResults();
   },
   watch: {
-    keywords: function keywords(after, before) {
-      if (this.keywords.length > 2 || this.keywords.length === 0) {//this.search();
-      }
-    }
+    /*keywords(after, before) {
+        if (this.keywords.length > 2 || this.keywords.length === 0) {
+            //this.search();
+        }
+    }*/
   },
   methods: {
     getResults: function getResults() {
       var _this = this;
 
       this.loading = true;
-      axios.post("https://us-central1-marasieltotil.cloudfunctions.net/getAllDrivers").then(function (res) {
-        _this.drivers = res.data;
-        console.log(res.data[0].drivePos._latitude);
+      var pageSize = 3;
+      var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users');
+      query.where('vehicle_type', 'in', [0, 1]).onSnapshot(function (snap) {
+        snap.forEach(function (doc) {
+          _this.drivers.push(doc.data());
+        });
         _this.loading = false;
       });
     },
     search: function search(page) {
-      this.loading = true;
-
+      /*this.loading = true;
       if (typeof page === "undefined") {
-        page = 1;
-      }
-      /*axios
-          .get(
-              CONFIG.API_URL +
-              "drivers/apigate/search/drivers?page=" +
-              page +
-              "&keywords=" +
-              this.keywords +
-              "&api_token=" +
-              this.auth.api_token
-          )
-          .then(res => {
-              this.drivers = res.data;
-              this.loading = false;
-          });*/
-
+          page = 1;
+      }*/
+    },
+    addCredit: function addCredit(driver) {
+      this.driver = driver;
+      $("#creditDialog").modal("show");
+    },
+    doAddCredit: function doAddCredit() {
+      this.loading = true;
+      var today = new Date();
+      var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc('Oj1z83UIm8ReDw13izX55IDVUh63').collection('transactions').doc(randomStr(18)).set({
+        date: today,
+        desc: 'Deposit',
+        type: "12",
+        value: this.newCredit
+      });
+      this.loading = false;
+      $("#creditDialog").modal("hide");
+      toastr["success"]('Creadit has been added', 'ok');
     },
     clearFields: function clearFields() {//this.user.name = this.user.email =this.user.domain= this.user.password = null;
     }
@@ -54990,6 +55062,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DriversStaticsComponent",
@@ -54999,6 +55105,9 @@ __webpack_require__.r(__webpack_exports__);
       path: _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].PATH,
       loading: false,
       drivers: [],
+      bestDrivers: [],
+      max: 0,
+      min: 0,
       allDriversSize: 0,
       motorDriversSize: 0,
       taxiDriversSize: 0,
@@ -55011,8 +55120,31 @@ __webpack_require__.r(__webpack_exports__);
     this.getDriversSize();
     this.getMotorsSize();
     this.getTaxiSize();
+    this.getBestDrivers();
   },
+  mounted: function mounted() {},
   methods: {
+    getColor: function getColor(v) {
+      var x = v;
+
+      switch (true) {
+        case x < 20:
+          return 'danger';
+          break;
+
+        case x < 50:
+          return 'warning';
+          break;
+
+        case x < 70:
+          return 'primary';
+          break;
+
+        default:
+          return 'success';
+          break;
+      }
+    },
     getDriversSize: function getDriversSize() {
       var _this = this;
 
@@ -55041,6 +55173,52 @@ __webpack_require__.r(__webpack_exports__);
       query.where('vehicle_type', '==', 1).onSnapshot(function (snap) {
         _this3.taxiDriversSize = snap.size;
         _this3.loading = false;
+      });
+    },
+    getBestDrivers: function getBestDrivers() {
+      var _this4 = this;
+
+      this.loading = true;
+      var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users');
+      query.where('vehicle_type', 'in', [0, 1]).onSnapshot(function (snap) {
+        snap.forEach(function (doc) {
+          var orders = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('orders');
+          var subquery = orders.where('driver_uid', '==', doc.data().userID).where('status', '==', '3').onSnapshot(function (subSnap) {
+            var item = {};
+            item.id = doc.data().userID;
+            item.fname = doc.data().firstName;
+            item.avatar = doc.data().profilePictureURL;
+            item.lname = doc.data().lastName;
+            item.orders = subSnap.size;
+            var total = 0;
+            subSnap.forEach(function (o) {
+              total = parseInt(total + parseFloat(o.data().price));
+            });
+            item.total = total;
+
+            var isExist = _this4.bestDrivers.find(function (o) {
+              return o.id === doc.data().userID;
+            });
+
+            if (!isExist) {
+              _this4.bestDrivers.push(item);
+            } else {
+              var index = _this4.bestDrivers.indexOf(isExist);
+
+              _this4.bestDrivers.splice(index, 1);
+
+              _this4.bestDrivers.push(item);
+            }
+
+            _this4.bestDrivers.sort(function (a, b) {
+              return b.total - a.total;
+            });
+
+            if (parseInt(_this4.bestDrivers[0].total) > _this4.max) {
+              _this4.max = parseInt(_this4.bestDrivers[0].total);
+            }
+          });
+        });
       });
     }
   }
@@ -76163,7 +76341,29 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v("+++")])
+                  _c("td", [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-sm btn-dark",
+                        attrs: {
+                          type: "button",
+                          "data-toggle": "modal",
+                          "data-target": "#staticBackdrop"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.addCredit(driver)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                            Add Credit\n                        "
+                        )
+                      ]
+                    )
+                  ])
                 ])
               }),
               0
@@ -76173,9 +76373,137 @@ var render = function() {
         _vm._v(" "),
         _c("hr"),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2" })
+        _vm._m(1)
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "creditDialog",
+          "data-backdrop": "static",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "staticBackdropLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "staticBackdropLabel" }
+                  },
+                  [
+                    _c("i", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.loading,
+                          expression: "loading"
+                        }
+                      ],
+                      staticClass: "fas fa-cog fa-spin px-2 text-primary"
+                    }),
+                    _vm._v("Add Credit\n                    ")
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(2)
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.driver && _vm.driver.userID,
+                      expression: "driver && driver.userID"
+                    }
+                  ],
+                  attrs: { type: "hidden" },
+                  domProps: { value: _vm.driver && _vm.driver.userID },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(
+                        _vm.driver && _vm.driver,
+                        "userID",
+                        $event.target.value
+                      )
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group mt-3" }, [
+                  _vm._m(3),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newCredit,
+                        expression: "newCredit"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "email",
+                      placeholder: "Enter Ammount..",
+                      required: ""
+                    },
+                    domProps: { value: _vm.newCredit },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.newCredit = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.doAddCredit }
+                  },
+                  [_vm._v("Add Credit")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -76189,6 +76517,55 @@ var staticRenderFns = [
         { staticClass: "btn btn-default", attrs: { type: "submit" } },
         [_c("i", { staticClass: "fas fa-search" })]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "p-2" }, [
+      _c("nav", { attrs: { "aria-label": "Page navigation example" } }, [
+        _c("ul", { staticClass: "pagination" }, [
+          _c("li", { staticClass: "page-item" }, [
+            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+              _vm._v("Previous")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("li", { staticClass: "page-item" }, [
+            _c("a", { staticClass: "page-link", attrs: { href: "#" } }, [
+              _vm._v("Next")
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-prepend" }, [
+      _c("span", { staticClass: "input-group-text" }, [
+        _c("i", { staticClass: "fas fa-dollar-sign" })
+      ])
     ])
   }
 ]
@@ -76215,125 +76592,216 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c("div", { staticClass: "small-box bg-success" }, [
-          _c("div", { staticClass: "inner" }, [
-            _c("h3", [_vm._v("+" + _vm._s(_vm.allDriversSize))]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.loading,
-                    expression: "loading"
-                  }
-                ],
-                staticClass: "fas fa-cog fa-spin px-2 text-light"
-              }),
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.local[_vm.lang + ".leads"]["alldrivers"]) +
-                  "\n                    "
-              )
-            ])
-          ]),
+      _c("div", { staticClass: "col-lg-4" }, [
+        _c("div", { staticClass: "card" }, [
+          _vm._m(0),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "div",
+            { staticClass: "card-body p-2" },
+            _vm._l(_vm.bestDrivers, function(driver, index) {
+              return _c(
+                "div",
+                { key: driver.id, staticClass: "progress-group" },
+                [
+                  _c("img", {
+                    staticClass: "rounded-circle m-1",
+                    attrs: { src: driver.avatar, width: "24" }
+                  }),
+                  _vm._v(
+                    " " +
+                      _vm._s(driver.fname) +
+                      " " +
+                      _vm._s(driver.lname) +
+                      "\n                        "
+                  ),
+                  _c("span", { staticClass: "float-right" }, [
+                    _c("b", [_vm._v(_vm._s(driver.total)), _vm._m(1, true)]),
+                    _vm._v("/" + _vm._s(driver.orders))
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "progress progress-sm mb-3" }, [
+                    _c("div", {
+                      class:
+                        "progress-bar bg-" +
+                        _vm.getColor((100 * driver.total) / _vm.max),
+                      style: "width: " + (100 * driver.total) / _vm.max + "%"
+                    })
+                  ])
+                ]
+              )
+            }),
+            0
+          )
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c("div", { staticClass: "small-box bg-info" }, [
-          _c("div", { staticClass: "inner" }, [
-            _c("h3", [_vm._v("+" + _vm._s(_vm.motorDriversSize))]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.loading,
-                    expression: "loading"
-                  }
-                ],
-                staticClass: "fas fa-cog fa-spin px-2 text-light"
-              }),
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.local[_vm.lang + ".leads"]["motor"]) +
-                  "\n                    "
-              )
+      _c("div", { staticClass: "col-lg-8" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-6" }, [
+            _c("div", { staticClass: "small-box bg-success" }, [
+              _c("div", { staticClass: "inner" }, [
+                _c("h3", [_vm._v("+" + _vm._s(_vm.allDriversSize))]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("i", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.loading,
+                        expression: "loading"
+                      }
+                    ],
+                    staticClass: "fas fa-cog fa-spin px-2 text-light"
+                  }),
+                  _vm._v(
+                    "\n                                " +
+                      _vm._s(_vm.local[_vm.lang + ".leads"]["alldrivers"]) +
+                      "\n                            "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
             ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c("div", { staticClass: "small-box bg-dark text-light" }, [
-          _c("div", { staticClass: "inner" }, [
-            _c("h3", [_vm._v("+" + _vm._s(_vm.taxiDriversSize))]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.loading,
-                    expression: "loading"
-                  }
-                ],
-                staticClass: "fas fa-cog fa-spin px-2 text-light"
-              }),
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.local[_vm.lang + ".leads"]["taxi"]) +
-                  "\n                    "
-              )
+          _c("div", { staticClass: "col-lg-6" }, [
+            _c("div", { staticClass: "small-box bg-info" }, [
+              _c("div", { staticClass: "inner" }, [
+                _c("h3", [_vm._v("+" + _vm._s(_vm.motorDriversSize))]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("i", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.loading,
+                        expression: "loading"
+                      }
+                    ],
+                    staticClass: "fas fa-cog fa-spin px-2 text-light"
+                  }),
+                  _vm._v(
+                    "\n                                " +
+                      _vm._s(_vm.local[_vm.lang + ".leads"]["motor"]) +
+                      "\n                            "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2)
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-lg-3 col-6" }, [
-        _c("div", { staticClass: "small-box bg-warning" }, [
-          _c("div", { staticClass: "inner" }, [
-            _c("h3", [_vm._v("+" + _vm._s(_vm.pencount))]),
-            _vm._v(" "),
-            _c("p", [
-              _c("i", {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.loading,
-                    expression: "loading"
-                  }
-                ],
-                staticClass: "fas fa-cog fa-spin px-2 text-light"
-              }),
-              _vm._v(
-                "\n                        " +
-                  _vm._s(_vm.local[_vm.lang + ".leads"]["pending"]) +
-                  "\n                    "
-              )
+          _c("div", { staticClass: "col-lg-6" }, [
+            _c("div", { staticClass: "small-box bg-dark text-light" }, [
+              _c("div", { staticClass: "inner" }, [
+                _c("h3", [_vm._v("+" + _vm._s(_vm.taxiDriversSize))]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("i", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.loading,
+                        expression: "loading"
+                      }
+                    ],
+                    staticClass: "fas fa-cog fa-spin px-2 text-light"
+                  }),
+                  _vm._v(
+                    "\n                                " +
+                      _vm._s(_vm.local[_vm.lang + ".leads"]["taxi"]) +
+                      "\n                            "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(4)
             ])
           ]),
           _vm._v(" "),
-          _vm._m(3)
+          _c("div", { staticClass: "col-lg-6" }, [
+            _c("div", { staticClass: "small-box bg-warning" }, [
+              _c("div", { staticClass: "inner" }, [
+                _c("h3", [_vm._v("+" + _vm._s(_vm.pencount))]),
+                _vm._v(" "),
+                _c("p", [
+                  _c("i", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.loading,
+                        expression: "loading"
+                      }
+                    ],
+                    staticClass: "fas fa-cog fa-spin px-2 text-light"
+                  }),
+                  _vm._v(
+                    "\n                                " +
+                      _vm._s(_vm.local[_vm.lang + ".leads"]["pending"]) +
+                      "\n\n                            "
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
+          ])
         ])
       ])
     ])
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-header" }, [
+      _vm._v("\n\n                    Drivers Statics\n                    "),
+      _c("div", { staticClass: "card-tools" }, [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-tool",
+            attrs: {
+              type: "button",
+              "data-card-widget": "collapse",
+              "data-toggle": "tooltip",
+              title: "Collapse"
+            }
+          },
+          [_c("i", { staticClass: "fas fa-minus" })]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-tool",
+            attrs: {
+              type: "button",
+              "data-card-widget": "remove",
+              "data-toggle": "tooltip",
+              title: "Remove"
+            }
+          },
+          [_c("i", { staticClass: "fas fa-times" })]
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("small", [_c("sup", [_vm._v("‎SDG")])])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -91554,7 +92022,8 @@ Vue.component('permission-component', __webpack_require__(/*! ./components/Permi
 Vue.component('config-component', __webpack_require__(/*! ./components/ConfigComponent.vue */ "./resources/js/components/ConfigComponent.vue")["default"]);
 Vue.component('settings-component', __webpack_require__(/*! ./components/SettingsComponent.vue */ "./resources/js/components/SettingsComponent.vue")["default"]);
 
-__webpack_require__(/*! ../../Modules/Drivers/Resources/assets/js/app */ "./Modules/Drivers/Resources/assets/js/app.js");
+__webpack_require__(/*! ../../Modules/Drivers/Resources/assets/js/app */ "./Modules/Drivers/Resources/assets/js/app.js"); //ez6f60y3mjyc
+
 
 var CONFIG = {
   //API_URL: 'https://marasiel.com/public/api/',
