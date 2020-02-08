@@ -54941,11 +54941,12 @@ function randomStr(length) {
       this.loading = true;
       var pageSize = 3;
       var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users');
-      query.where('vehicle_type', 'in', [0, 1]).onSnapshot(function (snap) {
+      query.where('vehicle_type', 'in', [0, 1]).get().then(function (snap) {
         snap.forEach(function (doc) {
           _this.drivers.push(doc.data());
+
+          _this.loading = false;
         });
-        _this.loading = false;
       });
     },
     search: function search(page) {
@@ -55490,6 +55491,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+function randomStr(length) {
+  var result = '';
+  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var charactersLength = characters.length;
+
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+
+  return result;
+}
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SheetComponent",
   props: ["auth", "lang", "roles", "acl"],
@@ -55548,12 +55562,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.loading = true;
       this.drivers.data[index].active = 1;
-      /*axios.get('https://us-central1-marasieltotil.cloudfunctions.net/driversStatics?rid=1')
-      .then(res=>{
-          this.loading = false;
-          console.log(res);
-      });*/
-
       var data = {
         hash: driver.hash,
         email: driver.email,
@@ -55565,20 +55573,32 @@ __webpack_require__.r(__webpack_exports__);
         vtype: driver.vtype,
         profile_URL: driver.avatar,
         country: driver.country
-      };
-      axios.get(_resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL + "drivers/apigate/set/" + driver.id + "/approved?api_token=" + this.auth.api_token).then(function () {
-        axios.post('https://us-central1-marasieltotil.cloudfunctions.net/approveDriver', data).then(function (res) {
+      }; //const query=CONFIG.DB.collection('feeds');
+
+      axios.get(_resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL + "drivers/apigate/set/" + driver.id + "/approved?api_token=" + this.auth.api_token).then(function (res) {
+        if (res.data == 1) {
+          var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc(driver.hash).set({
+            'appIdentifier': 'flutter-onboarding',
+            'email': driver.email,
+            'firstName': driver.fname,
+            'lastName': driver.lname,
+            'gender': '0',
+            'phone': parseInt(driver.phone),
+            'profilePictureURL': driver.avatar,
+            'userID': driver.hash,
+            'vehicle_brand': driver.vmodel,
+            'vehicle_type': parseInt(driver.vtype),
+            'country': driver.country
+          });
+          toastr["success"]('Driver has been activated', 'ok');
           _this3.loading = false;
-          console.log(res);
-        });
+        } else {
+          console.log('unexpected error!!!');
+          _this3.loading = false;
+        }
       })["catch"](function (error) {
         _this3.loading = false;
-
-        if (error.response.status === 422) {
-          _this3.errors = error.response.data.errors || {};
-        } else {
-          toastr["error"](_this3.local[_this3.lang + ".alerts"]["error"], _this3.local[_this3.lang + ".alerts"]["err"]);
-        }
+        console.log(error);
       });
     },
     clearFields: function clearFields() {//this.user.name = this.user.email =this.user.domain= this.user.password = null;

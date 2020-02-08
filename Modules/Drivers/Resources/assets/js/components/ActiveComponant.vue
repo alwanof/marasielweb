@@ -148,7 +148,6 @@
         created() {
             this.getResults();
 
-
         },
         watch: {
             /*keywords(after, before) {
@@ -163,12 +162,17 @@
                 this.loading = true;
                     const pageSize = 3;
                     const query=CONFIG.DB.collection('users');
-                    query.where('vehicle_type','in',[0,1]).onSnapshot(snap => {
-                    snap.forEach(doc=>{
-                        this.drivers.push(doc.data());
+                    query.where('vehicle_type','in',[0,1]).get()
+                    .then(snap=>{
+                        snap.forEach(doc=>{
+                            this.drivers.push(doc.data());
+                            this.loading = false;
+                        });
+
+
                     });
-                    this.loading = false;
-                });
+
+
             },
             search(page) {
                 /*this.loading = true;

@@ -79,7 +79,15 @@
 
 <script>
     import CONFIG from "../../../../../../resources/js/app";
-
+    function randomStr(length) {
+        var result           = '';
+        var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        var charactersLength = characters.length;
+        for ( var i = 0; i < length; i++ ) {
+            result += characters.charAt(Math.floor(Math.random() * charactersLength));
+        }
+        return result;
+    }
     export default {
         name: "SheetComponent",
         props: ["auth", "lang","roles","acl"],
@@ -148,11 +156,7 @@
             active(index,driver){
                 this.loading = true;
                 this.drivers.data[index].active=1;
-                /*axios.get('https://us-central1-marasieltotil.cloudfunctions.net/driversStatics?rid=1')
-                .then(res=>{
-                    this.loading = false;
-                    console.log(res);
-                });*/
+
                 const data={
                     hash:driver.hash,
                     email:driver.email,
@@ -167,34 +171,42 @@
 
                 }
 
+                //const query=CONFIG.DB.collection('feeds');
                 axios
                     .get(
                         CONFIG.API_URL + "drivers/apigate/set/"+ driver.id+ "/approved?api_token=" + this.auth.api_token
                     )
-                    .then(() => {
-                        axios.post(
-                            'https://us-central1-marasieltotil.cloudfunctions.net/approveDriver',
-                            data
-                        )
-                            .then(res=>{
-                                this.loading = false;
-                                console.log(res);
-                            });
+                    .then((res) => {
+                      if(res.data==1){
+
+                          const query=CONFIG.DB.collection('users')
+                          .doc(driver.hash)
+                          .set({
+                              'appIdentifier':'flutter-onboarding',
+                              'email': driver.email,
+                              'firstName': driver.fname,
+                              'lastName': driver.lname,
+                              'gender': '0',
+                              'phone': parseInt(driver.phone),
+                              'profilePictureURL': driver.avatar,
+                              'userID': driver.hash,
+                              'vehicle_brand': driver.vmodel,
+                              'vehicle_type': parseInt(driver.vtype),
+                              'country': driver.country
+                          });
+                          toastr["success"]('Driver has been activated','ok');
+                          this.loading = false;
+                      }else{
+                          console.log('unexpected error!!!');
+                          this.loading = false;
+                      }
 
                     })
                     .catch(error => {
                         this.loading = false;
-                        if (error.response.status === 422) {
-                            this.errors = error.response.data.errors || {};
-                        } else {
-
-                            toastr["error"](
-                                this.local[this.lang + ".alerts"]["error"],
-                                this.local[this.lang + ".alerts"]["err"]
-                            );
-
-                        }
+                        console.log(error);
                     });
+
 
             },
 
