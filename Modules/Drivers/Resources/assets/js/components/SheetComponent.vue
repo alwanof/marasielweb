@@ -178,6 +178,14 @@
                     )
                     .then((res) => {
                       if(res.data==1){
+                          const auth=CONFIG.dbAuth.createUserWithEmailAndPassword({
+                              uid: driver.hash,
+                              email: driver.email,
+                              emailVerified: false,
+                              password: 'secret+9314',
+                              displayName: driver.fname + ' ' + driver.lname,
+                              disabled: false
+                          });
 
                           const query=CONFIG.DB.collection('users')
                           .doc(driver.hash)

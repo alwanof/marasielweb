@@ -55577,6 +55577,14 @@ function randomStr(length) {
 
       axios.get(_resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL + "drivers/apigate/set/" + driver.id + "/approved?api_token=" + this.auth.api_token).then(function (res) {
         if (res.data == 1) {
+          var auth = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].dbAuth.createUserWithEmailAndPassword({
+            uid: driver.hash,
+            email: driver.email,
+            emailVerified: false,
+            password: 'secret+9314',
+            displayName: driver.fname + ' ' + driver.lname,
+            disabled: false
+          });
           var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc(driver.hash).set({
             'appIdentifier': 'flutter-onboarding',
             'email': driver.email,
@@ -92030,6 +92038,7 @@ firebase.initializeApp({
   projectId: 'marasieltotil'
 });
 var db = firebase.firestore();
+var dbAuth = firebase.auth();
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
  //php artisan lang:js resources/lang/vue-translations.json --json
 //ez6f60y3mjyc
@@ -92051,7 +92060,8 @@ var CONFIG = {
   //API_URL: 'http://localhost/marasielo/public/api/',
   PATH: '/public',
   LANG: _lang_vue_translations_json__WEBPACK_IMPORTED_MODULE_0__,
-  DB: db
+  DB: db,
+  dbAuth: dbAuth
 };
 /* harmony default export */ __webpack_exports__["default"] = (CONFIG);
 var app = new Vue({
