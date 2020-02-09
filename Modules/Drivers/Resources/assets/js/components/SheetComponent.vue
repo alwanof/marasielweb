@@ -171,37 +171,57 @@
 
                 }
 
+                const user=CONFIG.dbAuth.createUserWithEmailAndPassword(driver.email,'secret+9314')
+                .then(doc=>{
+                    if(doc){
+                        const query=CONFIG.DB.collection('users')
+                            .doc(doc.user.uid)
+                            .set({
+                                'appIdentifier':'flutter-onboarding',
+                                'email': driver.email,
+                                'firstName': driver.fname,
+                                'lastName': driver.lname,
+                                'gender': '0',
+                                'phone': parseInt(driver.phone),
+                                'profilePictureURL': driver.avatar,
+                                'userID': doc.user.uid,
+                                'vehicle_brand': driver.vmodel,
+                                'vehicle_type': parseInt(driver.vtype),
+                                'country': driver.country
+                            });
+                        axios.get(CONFIG.API_URL + "drivers/apigate/set/"+ driver.id+ "/"+doc.user.uid+"/approved?api_token=" + this.auth.api_token)
+                            .then((res) => {
+                                if(res.data==1){
+
+                                    toastr["success"]('Driver has been activated','ok');
+                                    this.loading = false;
+                                }else{
+                                    console.log('unexpected error!!!');
+                                    this.loading = false;
+                                }
+
+                            })
+                            .catch(error => {
+                                this.loading = false;
+                                console.log(error);
+                            });
+
+                    }
+                });
+
+
+
+
+
+
                 //const query=CONFIG.DB.collection('feeds');
-                axios
+                /*axios
                     .get(
                         CONFIG.API_URL + "drivers/apigate/set/"+ driver.id+ "/approved?api_token=" + this.auth.api_token
                     )
                     .then((res) => {
                       if(res.data==1){
-                          const auth=CONFIG.dbAuth.createUserWithEmailAndPassword({
-                              uid: driver.hash,
-                              email: driver.email,
-                              emailVerified: false,
-                              password: 'secret+9314',
-                              displayName: driver.fname + ' ' + driver.lname,
-                              disabled: false
-                          });
 
-                          const query=CONFIG.DB.collection('users')
-                          .doc(driver.hash)
-                          .set({
-                              'appIdentifier':'flutter-onboarding',
-                              'email': driver.email,
-                              'firstName': driver.fname,
-                              'lastName': driver.lname,
-                              'gender': '0',
-                              'phone': parseInt(driver.phone),
-                              'profilePictureURL': driver.avatar,
-                              'userID': driver.hash,
-                              'vehicle_brand': driver.vmodel,
-                              'vehicle_type': parseInt(driver.vtype),
-                              'country': driver.country
-                          });
                           toastr["success"]('Driver has been activated','ok');
                           this.loading = false;
                       }else{
@@ -213,7 +233,7 @@
                     .catch(error => {
                         this.loading = false;
                         console.log(error);
-                    });
+                    });*/
 
 
             },

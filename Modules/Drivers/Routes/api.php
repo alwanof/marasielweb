@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => 'drivers/apigate','middleware' => ['auth:api']], function () {
     Route::get('sheet','API\DriversController@index');
     Route::get('search/drivers', 'API\DriversController@search');
-    Route::get('set/{driver}/approved', 'API\DriversController@setApproved');
+    Route::get('set/{driver}/{uid}/approved', 'API\DriversController@setApproved');
 });
 
 

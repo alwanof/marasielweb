@@ -55573,19 +55573,10 @@ function randomStr(length) {
         vtype: driver.vtype,
         profile_URL: driver.avatar,
         country: driver.country
-      }; //const query=CONFIG.DB.collection('feeds');
-
-      axios.get(_resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL + "drivers/apigate/set/" + driver.id + "/approved?api_token=" + this.auth.api_token).then(function (res) {
-        if (res.data == 1) {
-          var auth = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].dbAuth.createUserWithEmailAndPassword({
-            uid: driver.hash,
-            email: driver.email,
-            emailVerified: false,
-            password: 'secret+9314',
-            displayName: driver.fname + ' ' + driver.lname,
-            disabled: false
-          });
-          var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc(driver.hash).set({
+      };
+      var user = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].dbAuth.createUserWithEmailAndPassword(driver.email, 'secret+9314').then(function (doc) {
+        if (doc) {
+          var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc(doc.user.uid).set({
             'appIdentifier': 'flutter-onboarding',
             'email': driver.email,
             'firstName': driver.fname,
@@ -55593,21 +55584,43 @@ function randomStr(length) {
             'gender': '0',
             'phone': parseInt(driver.phone),
             'profilePictureURL': driver.avatar,
-            'userID': driver.hash,
+            'userID': doc.user.uid,
             'vehicle_brand': driver.vmodel,
             'vehicle_type': parseInt(driver.vtype),
             'country': driver.country
           });
-          toastr["success"]('Driver has been activated', 'ok');
-          _this3.loading = false;
-        } else {
-          console.log('unexpected error!!!');
-          _this3.loading = false;
+          axios.get(_resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].API_URL + "drivers/apigate/set/" + driver.id + "/" + doc.user.uid + "/approved?api_token=" + _this3.auth.api_token).then(function (res) {
+            if (res.data == 1) {
+              toastr["success"]('Driver has been activated', 'ok');
+              _this3.loading = false;
+            } else {
+              console.log('unexpected error!!!');
+              _this3.loading = false;
+            }
+          })["catch"](function (error) {
+            _this3.loading = false;
+            console.log(error);
+          });
         }
-      })["catch"](function (error) {
-        _this3.loading = false;
-        console.log(error);
-      });
+      }); //const query=CONFIG.DB.collection('feeds');
+
+      /*axios
+          .get(
+              CONFIG.API_URL + "drivers/apigate/set/"+ driver.id+ "/approved?api_token=" + this.auth.api_token
+          )
+          .then((res) => {
+            if(res.data==1){
+                 toastr["success"]('Driver has been activated','ok');
+                this.loading = false;
+            }else{
+                console.log('unexpected error!!!');
+                this.loading = false;
+            }
+           })
+          .catch(error => {
+              this.loading = false;
+              console.log(error);
+          });*/
     },
     clearFields: function clearFields() {//this.user.name = this.user.email =this.user.domain= this.user.password = null;
     }

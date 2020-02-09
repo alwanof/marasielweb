@@ -5,7 +5,9 @@ namespace Modules\Drivers\Http\Controllers\API;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use Illuminate\Support\Facades\Storage;
 use Modules\Drivers\Entities\Driver;
+use Modules\Drivers\Notifications\SendAuth2Driver;
 
 class DriversController extends Controller
 {
@@ -30,12 +32,13 @@ class DriversController extends Controller
         return $drivers;
     }
 
-    public function setApproved(Driver $driver)
+    public function setApproved(Driver $driver,$uid)
     {
-        //return $driver;
+
         $driver->active = ($driver->active == 0) ? 1 : 0;
         $driver->save();
-        //$this->leadWelcomeEmail($driver);
+        $driver->notify(new SendAuth2Driver());
+
         return 1;
     }
 
@@ -58,6 +61,7 @@ class DriversController extends Controller
      * @param int $id
      * @return Response
      */
+
     public function destroy($id)
     {
         //
