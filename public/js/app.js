@@ -54894,6 +54894,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 function randomStr(length) {
@@ -54962,7 +54963,7 @@ function randomStr(length) {
     doAddCredit: function doAddCredit() {
       this.loading = true;
       var today = new Date();
-      var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc('Oj1z83UIm8ReDw13izX55IDVUh63').collection('transactions').doc(randomStr(18)).set({
+      var query = _resources_js_app__WEBPACK_IMPORTED_MODULE_0__["default"].DB.collection('users').doc(this.driver.userID).collection('transactions').doc(randomStr(18)).set({
         date: today,
         desc: 'Deposit',
         type: "12",
@@ -76503,8 +76504,11 @@ var render = function() {
                     ],
                     staticClass: "form-control",
                     attrs: {
-                      type: "email",
+                      type: "number",
+                      min: "0",
+                      step: "1",
                       placeholder: "Enter Ammount..",
+                      onkeypress: "return isNumberKey(event)",
                       required: ""
                     },
                     domProps: { value: _vm.newCredit },

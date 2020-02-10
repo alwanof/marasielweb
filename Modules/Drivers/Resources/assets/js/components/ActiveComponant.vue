@@ -93,10 +93,11 @@
                   </span>
                             </div>
                             <input
-                                type="email"
+                                type="number" min="0" step="1"
                                 v-model="newCredit"
                                 class="form-control"
                                 placeholder="Enter Ammount.."
+                                onkeypress="return isNumberKey(event)"
                                 required
                             />
                         </div>
@@ -119,6 +120,7 @@
 
 <script>
     import CONFIG from "../../../../../../resources/js/app";
+
     function randomStr(length) {
         var result           = '';
         var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -189,7 +191,7 @@
                 this.loading = true;
                 var today = new Date();
                 const query=CONFIG.DB.collection('users')
-                .doc('Oj1z83UIm8ReDw13izX55IDVUh63').collection('transactions').doc(randomStr(18))
+                .doc(this.driver.userID).collection('transactions').doc(randomStr(18))
                 .set({
                     date: today,
                     desc:'Deposit',
