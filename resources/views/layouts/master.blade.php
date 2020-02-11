@@ -186,18 +186,22 @@
                                 <i class="right fas fa-angle-left"></i>
                             </a>
                             <ul class="nav nav-treeview">
+                                @can('manage_pending-drivers')
                                 <li class="nav-item">
                                     <a href="{{ route('drivers.sheet') }}" class="nav-link">
                                         <i class="far fa-circle text-warning nav-icon"></i>
                                         <p>{{ __('master.pending-drivers') }}</p>
                                     </a>
                                 </li>
+                                @endcan
+                                 @can('manage_active-drivers')
                                 <li class="nav-item">
                                     <a href="{{ route('drivers.active') }}" class="nav-link">
                                         <i class="far fa-circle text-success nav-icon"></i>
                                         <p>{{ __('master.active-drivers') }}</p>
                                     </a>
                                 </li>
+                                     @endcan
                             </ul>
                         </li>
                             @endcan

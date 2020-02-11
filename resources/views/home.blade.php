@@ -14,14 +14,16 @@
 @section('content')
   <!-- Default box -->
   <div class="container">
-      <driversinfo-component :pencount="{{$pendingDrivers}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfo-component>
-      <ordersinfo-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}"></ordersinfo-component>
-
-
-
-      <!-- /.row -->
       <div class="row">
-          <div class="col-lg-6">
+          <div class="col-lg-4">
+              <driversinfo-component :acl="{{json_encode($acl)}}" :pencount="{{$pendingDrivers}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfo-component>
+
+          </div>
+          <div class="col-lg-4">
+              <ordersinfo-component :acl="{{json_encode($acl)}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}"></ordersinfo-component>
+
+          </div>
+          <div class="col-lg-4">
               <div class="card">
                   <div class="card-header">
 
@@ -38,15 +40,14 @@
                   <div class="card-body p-0">
                       @foreach($data['newNoti'] as $item)
                           <div class="p-2 mb-1 bg-light">
-                             <img src="{{$item->data['user']['avatar']}}" width="48px" class="img-thumbnail img-circle" /> {{$item->data['data']}}
+                              <img src="{{$item->data['user']['avatar']}}" width="48px" class="img-thumbnail img-circle" /> {{$item->data['data']}}
                           </div>
                       @endforeach
                   </div>
                   <!-- /.card-body -->
 
               </div>
-          </div>
-          <div class="col-lg-6">
+
               <div class="card">
                   <div class="card-header">
 
@@ -68,8 +69,15 @@
                       @endforeach
                   </div>
                   <!-- /.card-body -->
+              </div>
+
+
           </div>
       </div>
+
+
+
+
   </div>
 
       <!-- /.card -->

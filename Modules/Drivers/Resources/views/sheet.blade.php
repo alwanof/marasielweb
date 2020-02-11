@@ -13,10 +13,10 @@
 @endsection
 @section('content')
     <!-- Default box -->
-    <driversinfo-component :pencount="{{$pendingDrivers}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfo-component>
+    <driversinfohor-component :acl="{{json_encode($acl)}}" :pencount="{{$pendingDrivers}}" :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" ></driversinfohor-component>
     <hr>
 
-    <sheet-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" :acl="{{json_encode($acl)}}" :roles="{{ $roles }}" ></sheet-component>
+    <sheet-component :lang="{{ json_encode(app()->getLocale()) }}" :auth="{{ json_encode(Auth::user()) }}" :acl="{{json_encode($acl)}}"  ></sheet-component>
 
 
 @endsection

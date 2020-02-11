@@ -51,7 +51,11 @@ return [
     'alldrivers'=>'All Drivers',
     'motor'=>'Motor',
     'taxi'=>'Taxi',
-    'pending'=>'Pending'
+    'pending'=>'Pending',
+    'driversstatics'=>'Drivers Statics',
+    'topdrivers'=>'Top Drivers',
+    'usd'=>'SDG'
+
 
 
 ];

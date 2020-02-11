@@ -38,16 +38,17 @@ class HomeController extends Controller
         ];
 
 
-        $roles = Role::all();
+
 
         $acl = [
-            'manage_drivers' => (Gate::allows('manage_drivers')) ? true : false,
-            'make_drivers_approved' => (Gate::allows('make_drivers_approved')) ? true : false,
+            'showDriversStatics' => (Gate::allows('show-drivers-statics')) ? true : false,
+            'showTopDrivers' => (Gate::allows('show-top-drivers')) ? true : false,
+            'showOrdersStatics' => (Gate::allows('show-orders-statics')) ? true : false,
         ];
         $pendingDrivers=Driver::where('active',0)->count();
 
         auth()->user()->unreadNotifications->markAsRead();
-        return view('home',compact(['data','roles','acl','pendingDrivers']));
+        return view('home',compact(['data','acl','pendingDrivers']));
     }
 
     public function lang($locale)

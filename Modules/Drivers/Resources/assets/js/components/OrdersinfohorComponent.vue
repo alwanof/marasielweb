@@ -1,55 +1,42 @@
 <template>
     <div>
-        <div class="card bg-light" v-show="acl.showOrdersStatics">
-            <div class="card-header text-primary">
-                {{ local[lang+".orders"]["ordersstatics"] }}
-                <i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fas fa-times"></i></button>
-                </div>
-            </div>
-            <div class="card-body p-2">
+        <div class="row">
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-success elevation-1">
                         <i class="fas fa-dollar-sign"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".orders"]["completedorders"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".orders"]["completedorders"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{orders.done}} <small>{{orders.doneSum}} <sup>{{ local[lang+".leads"]["usd"] }}</sup></small>
                         </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
-
+            </div>
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1">
                         <i class="fas fa-sync"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".orders"]["now"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".orders"]["now"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{orders.progress}}
                         </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
-
-                <div class="info-box">
-                    <span class="info-box-icon bg-warning elevation-1">
-                        <i class="far fa-window-close"></i>
-                    </span>
-
-                    <div class="info-box-content">
+            </div>
+            <div class="col-lg-3">
+                <div class="info-box-content">
                         <span class="info-box-text">
-                            {{ local[lang+".orders"]["canceledbycustomer"] }}
+                            {{ local[lang+".orders"]["canceledbycustomer"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i>
                         </span>
-                        <span class="info-box-number">
+                    <span class="info-box-number">
                             {{orders.canceledByUser}}
                             <small>
                                 <a href="#" :title="local[lang+'.orders']['canceledbyapp']">
@@ -57,19 +44,16 @@
                                 </a>
                             </small>
                         </span>
-                    </div>
-                    <!-- /.info-box-content -->
                 </div>
-
-
-
+            </div>
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-danger elevation-1">
                         <i class="far fa-calendar-times"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".orders"]["bounce"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".orders"]["bounce"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{orders.bounce}}
                         </span>
@@ -77,8 +61,6 @@
                     <!-- /.info-box-content -->
                 </div>
             </div>
-            <!-- /.card-body -->
-
         </div>
 
         <!-- /.row -->
@@ -89,8 +71,8 @@
     import CONFIG from "../../../../../../resources/js/app";
 
     export default {
-        name: "OrdersinfoComponent",
-        props: ["auth","lang","acl"],
+        name: "OrdersinfohorComponent",
+        props: ["auth","lang"],
         data() {
             return {
                 path: CONFIG.PATH,

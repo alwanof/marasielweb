@@ -1,65 +1,59 @@
 <template>
     <div>
-        <div class="card  bg-light" v-show="acl.showDriversStatics">
-            <div class="card-header text-primary">
-                {{ local[lang+".leads"]["driversstatics"] }}
-                <i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fas fa-times"></i></button>
-                </div>
-            </div>
-            <div class="card-body p-2">
+        <div class="row" v-show="acl.showDriversStatics">
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-success elevation-1">
                         <i class="fas fa-users"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".leads"]["alldrivers"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".leads"]["alldrivers"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{allDriversSize}}
 		                </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
-
+            </div>
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-info elevation-1">
                         <i class="fas fa-motorcycle"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".leads"]["motor"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".leads"]["motor"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{motorDriversSize}}
 		                </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
-
+            </div>
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-warning elevation-1">
                         <i class="fas fa-taxi"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".leads"]["taxi"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".leads"]["taxi"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{taxiDriversSize}}
 		                </span>
                     </div>
                     <!-- /.info-box-content -->
                 </div>
+            </div>
+            <div class="col-lg-3">
                 <div class="info-box">
                     <span class="info-box-icon bg-danger elevation-1">
                         <i class="far fa-pause-circle"></i>
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".leads"]["pending"] }}</span>
+                        <span class="info-box-text">{{ local[lang+".leads"]["pending"] }}<i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i></span>
                         <span class="info-box-number">
                             {{pencount}}
 		                </span>
@@ -67,39 +61,7 @@
                     <!-- /.info-box-content -->
                 </div>
             </div>
-            <!-- /.card-body -->
-
         </div>
-
-
-        <div class="card " v-show="acl.showTopDrivers">
-            <div class="card-header text-primary">
-
-                {{ local[lang+".leads"]["topdrivers"] }}
-                <i class="fas fa-cog fa-spin px-2 text-primary" v-show="loading"></i>
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fas fa-minus"></i></button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip" title="Remove">
-                        <i class="fas fa-times"></i></button>
-                </div>
-            </div>
-            <div class="card-body p-2">
-                <div class="progress-group" v-for="(driver, index) in bestDrivers" :key="driver.id">
-
-                    <img :src="driver.avatar" class="rounded-circle m-1" width="24"> {{driver.fname}} {{driver.lname}}
-                    <span class="float-right"><b>{{driver.total}}<small><sup>{{ local[lang+".leads"]["usd"] }}</sup></small></b>/{{driver.orders}}</span>
-                    <div class="progress progress-sm mb-3">
-                        <div :class="'progress-bar bg-'+getColor(100*driver.total/max)" :style="'width: '+(100*driver.total/max)+'%'"></div>
-                    </div>
-                </div>
-
-            </div>
-            <!-- /.card-body -->
-
-        </div>
-
-
     </div>
 </template>
 
@@ -107,8 +69,8 @@
     import CONFIG from "../../../../../../resources/js/app";
 
     export default {
-        name: "DriversInfoComponent",
-        props: ["pencount","acl","auth","lang"],
+        name: "DriversInfohorComponent",
+        props: ["pencount","auth","acl","lang"],
         data() {
             return {
                 path: CONFIG.PATH,

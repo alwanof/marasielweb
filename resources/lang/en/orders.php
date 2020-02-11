@@ -5,6 +5,8 @@ return [
     'now'=>'Right Now',
     'canceledbycustomer'=>'Canceled by Customer',
     'canceledbyapp'=>'Terminated by system',
-    'bounce'=>'Bounce'
+    'bounce'=>'Bounce',
+    'ordersstatics'=>'Orders Statics'
+
 
 ];

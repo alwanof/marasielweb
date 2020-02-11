@@ -51,5 +51,8 @@ return [
     'alldrivers'=>'جمبع السائقين',
     'motor'=>'موتور',
     'taxi'=>'تكسي',
-    'pending'=>'معلق'
+    'pending'=>'معلق',
+    'driversstatics'=>'احصائيات السائقين',
+    'topdrivers'=>' افضل السائقين',
+    'usd'=>'SDG'
 ];

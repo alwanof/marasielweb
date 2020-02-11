@@ -30,7 +30,7 @@
                         <th>
                             <span class="badge badge-info">+{{drivers.total}}</span>
                         </th>
-                        <th></th>
+                        <th v-show="acl.makeDriversApproved"></th>
                         <th>{{ local[lang+".leads"]["fname"] }}</th>
                         <th>{{ local[lang+".leads"]["lname"] }}</th>
                         <th>{{ local[lang+".leads"]["email"] }}</th>
@@ -44,7 +44,7 @@
                     </thead>
                     <tbody>
                     <tr v-for="(driver, index) in drivers.data" :key="driver.id">
-                        <td width="15%">
+                        <td width="15%" v-show="acl.makeDriversApproved">
                             <button type="button"  @click="active(index,driver)"  :class="'btn btn-sm '+((driver.active==1)?'btn-success':'btn-warning')+' approveBtn text-light'"  :disabled="(driver.active==1)?true:false">
 
                                 {{ local[lang+".leads"]["approve"] }}
@@ -90,7 +90,7 @@
     }
     export default {
         name: "SheetComponent",
-        props: ["auth", "lang","roles","acl"],
+        props: ["auth", "lang","acl"],
         data() {
             return {
                 path: CONFIG.PATH,
