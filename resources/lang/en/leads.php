@@ -54,7 +54,8 @@ return [
     'pending'=>'Pending',
     'driversstatics'=>'Drivers Statics',
     'topdrivers'=>'Top Drivers',
-    'usd'=>'SDG'
+    'usd'=>'SDG',
+    'addcredit'=>'Add Credit',
 
 
 

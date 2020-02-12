@@ -54,5 +54,6 @@ return [
     'pending'=>'معلق',
     'driversstatics'=>'احصائيات السائقين',
     'topdrivers'=>' افضل السائقين',
-    'usd'=>'SDG'
+    'usd'=>'SDG',
+    'addcredit'=>'اضافة رصيد',
 ];

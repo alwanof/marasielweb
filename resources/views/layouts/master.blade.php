@@ -204,6 +204,26 @@
                                      @endcan
                             </ul>
                         </li>
+                        @endcan
+                            @can('manage_customers')
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="#" class="nav-link ">
+                                        <i class="fas fa-users-cog"></i>
+                                        <p>{{ __('customers.customers') }}</p>
+                                        <i class="right fas fa-angle-left"></i>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @can('manage_active_customers')
+                                            <li class="nav-item">
+                                                <a href="{{ route('customers.active') }}" class="nav-link">
+                                                    <i class="far fa-circle text-success nav-icon"></i>
+                                                    <p>{{ __('customers.activecustomers') }}</p>
+                                                </a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </li>
                             @endcan
                     </ul>
                 </li>

@@ -95,16 +95,26 @@ class DriversController extends Controller
     public function active()
     {
 
-        //$roles = Role::all();
 
         $acl = [
-            'manage_drivers' => (Gate::allows('manage_drivers')) ? true : false,
-            'make_drivers_approved' => (Gate::allows('make_drivers_approved')) ? true : false,
+            'addCredit2user' => (Gate::allows('add_credit2user')) ? true : false,
+
         ];
 
 
 
         return view('drivers::active', compact(['acl']));
+    }
+
+    public function customers(){
+        $acl = [
+            'addCredit2user' => (Gate::allows('add_credit2user')) ? true : false,
+
+        ];
+
+
+
+        return view('drivers::customers.active', compact(['acl']));
     }
 
     public function test()

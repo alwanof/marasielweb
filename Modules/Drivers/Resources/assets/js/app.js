@@ -5,5 +5,6 @@ Vue.component('driversinfo-component', require('./components/DriversinfoComponen
 Vue.component('driversinfohor-component', require('./components/DriversinfohorComponent').default);
 Vue.component('ordersinfo-component', require('./components/OrderinfoComponent').default);
 Vue.component('ordersinfohor-component', require('./components/OrdersinfohorComponent').default);
+Vue.component('activecustomers-component', require('./components/ActivecustomersComponent').default);
 
 
