@@ -111,14 +111,14 @@
                     snap.forEach(doc => {
                         total = total + Number(doc.data().price);
                     });
-                    this.orders.doneSum=total;
+                    this.orders.doneSum=parseInt(total);
                     this.loading = false;
                 });
             },
             getProgress() {
                 this.loading = true;
                 const query=CONFIG.DB.collection('orders');
-                query.where('status','in',[0,'1']).onSnapshot(snap => {
+                query.where('status','in',[0,'1',1,'0']).onSnapshot(snap => {
                     this.orders.progress=snap.size;
 
                     this.loading = false;

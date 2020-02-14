@@ -116,6 +116,26 @@ class DriversController extends Controller
 
         return view('drivers::customers.active', compact(['acl']));
     }
+    public function orders($filter){
+        $acl = [
+            'manageOrders' => (Gate::allows('manage_orders')) ? true : false,
+            'ordersDone' => (Gate::allows('orders_done')) ? true : false,
+
+        ];
+
+        switch ($filter){
+            case 'done':
+                return view('drivers::orders.done', compact(['acl']));
+                break;
+            default:
+                return abort(404);
+
+        }
+
+
+
+
+    }
 
     public function test()
     {

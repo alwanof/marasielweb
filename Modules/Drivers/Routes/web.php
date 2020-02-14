@@ -28,5 +28,6 @@ Route::group(['prefix' => 'drivers','middleware' => ['auth']],function () {
     Route::get('sheet/{active?}','DriversController@sheet')->name('drivers.sheet');
     Route::get('active','DriversController@active')->name('drivers.active');
     Route::get('customers/active','DriversController@customers')->name('customers.active');
+    Route::get('orders/{filter}','DriversController@orders')->name('orders.sheet');
 
 });

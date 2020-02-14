@@ -216,13 +216,16 @@
                                     }else{
                                         const index=this.bestDrivers.indexOf(isExist);
                                         this.bestDrivers.splice(index, 1);
-                                        this.bestDrivers.push(item);
+                                            this.bestDrivers.push(item);
                                     }
 
+
                                     this.bestDrivers.sort((a,b) => (b.total-a.total));
+
                                     if(parseInt(this.bestDrivers[0].total)>this.max){
                                         this.max=parseInt(this.bestDrivers[0].total);
                                     }
+                                    this.bestDrivers=this.bestDrivers.slice(0,limit);
                                 });
 
 

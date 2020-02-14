@@ -225,6 +225,26 @@
                                     </ul>
                                 </li>
                             @endcan
+                            @can('manage_orders')
+                                <li class="nav-item has-treeview menu-open">
+                                    <a href="#" class="nav-link ">
+                                        <i class="fas fa-check"></i>
+                                        <p>{{ __('orders.orders') }}</p>
+                                        <i class="right fa fa-angle-left"></i>
+                                    </a>
+                                    <ul class="nav nav-treeview">
+                                        @can('orders_done')
+                                            <li class="nav-item">
+                                                <a href="{{ route('orders.sheet','done') }}" class="nav-link">
+                                                    <i class="fas fa-dollar-sign text-success nav-icon"></i>
+                                                    <p>{{ __('orders.completedorders') }}</p>
+                                                </a>
+                                            </li>
+                                        @endcan
+
+                                    </ul>
+                                </li>
+                            @endcan
                     </ul>
                 </li>
                 <hr>
