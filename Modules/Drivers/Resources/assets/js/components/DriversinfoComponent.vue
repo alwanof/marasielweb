@@ -198,7 +198,6 @@
                             .where('status','==','3')
                             .onSnapshot(subSnap=>{
 
-
                                 let item={};
                                 item.id=doc.data().userID;
                                 item.fname=doc.data().firstName;
@@ -212,19 +211,14 @@
 
                                     item.total=total;
                                     let isExist = this.bestDrivers.find(o => o.id === doc.data().userID);
-                                    if(this.bestDrivers.length<limit){
-                                        console.log(this.bestDrivers.length);
-                                        if(!isExist){
-                                            this.bestDrivers.push(item);
-
-                                        }else{
-                                            const index=this.bestDrivers.indexOf(isExist);
-                                            this.bestDrivers.splice(index, 1);
-                                            this.bestDrivers.push(item);
-
-
-                                        }
+                                    if(!isExist){
+                                        this.bestDrivers.push(item);
+                                    }else{
+                                        const index=this.bestDrivers.indexOf(isExist);
+                                        this.bestDrivers.splice(index, 1);
+                                        this.bestDrivers.push(item);
                                     }
+
                                     this.bestDrivers.sort((a,b) => (b.total-a.total));
                                     if(parseInt(this.bestDrivers[0].total)>this.max){
                                         this.max=parseInt(this.bestDrivers[0].total);

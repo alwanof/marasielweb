@@ -55617,18 +55617,14 @@ __webpack_require__.r(__webpack_exports__);
                 return o.id === doc.data().userID;
               });
 
-              if (_this4.bestDrivers.length < limit) {
-                console.log(_this4.bestDrivers.length);
+              if (!isExist) {
+                _this4.bestDrivers.push(item);
+              } else {
+                var index = _this4.bestDrivers.indexOf(isExist);
 
-                if (!isExist) {
-                  _this4.bestDrivers.push(item);
-                } else {
-                  var index = _this4.bestDrivers.indexOf(isExist);
+                _this4.bestDrivers.splice(index, 1);
 
-                  _this4.bestDrivers.splice(index, 1);
-
-                  _this4.bestDrivers.push(item);
-                }
+                _this4.bestDrivers.push(item);
               }
 
               _this4.bestDrivers.sort(function (a, b) {
