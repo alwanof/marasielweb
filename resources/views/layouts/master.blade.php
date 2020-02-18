@@ -241,6 +241,15 @@
                                                 </a>
                                             </li>
                                         @endcan
+                                        @can('orders_progress')
+                                                <li class="nav-item">
+                                                    <a href="{{ route('orders.sheet','progress') }}" class="nav-link">
+                                                        <i class="fas fa-sync text-warning nav-icon"></i>
+                                                        <p>{{ __('orders.progressorders') }}</p>
+                                                    </a>
+                                                </li>
+                                        @endcan
+
 
                                     </ul>
                                 </li>

@@ -127,6 +127,9 @@ class DriversController extends Controller
             case 'done':
                 return view('drivers::orders.done', compact(['acl']));
                 break;
+            case 'progress':
+                return view('drivers::orders.progress', compact(['acl']));
+                break;
             default:
                 return abort(404);
 

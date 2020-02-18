@@ -18,7 +18,10 @@
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".orders"]["completedorders"] }}</span>
+                        <a href="drivers/orders/done">
+                            <span class="info-box-text">{{ local[lang+".orders"]["completedorders"] }}</span>
+                        </a>
+
                         <span class="info-box-number">
                             {{orders.done}} <small>{{orders.doneSum}} <sup>{{ local[lang+".leads"]["usd"] }}</sup></small>
                         </span>
@@ -32,7 +35,10 @@
                     </span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">{{ local[lang+".orders"]["now"] }}</span>
+                        <a href="drivers/orders/progress">
+                            <span class="info-box-text">{{ local[lang+".orders"]["now"] }}</span>
+                        </a>
+
                         <span class="info-box-number">
                             {{orders.progress}}
                         </span>

@@ -2,7 +2,8 @@
 
 return [
     'orders'=>'Orders',
-    'completedorders'=>'Completed Orders',
+    'completedorders'=>'Completed',
+    'progressorders'=>'Right Now',
     'now'=>'Right Now',
     'canceledbycustomer'=>'Canceled by Customer',
     'canceledbyapp'=>'Terminated by system',

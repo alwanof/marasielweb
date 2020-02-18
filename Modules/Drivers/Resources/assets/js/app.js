@@ -7,6 +7,8 @@ Vue.component('ordersinfo-component', require('./components/OrderinfoComponent')
 Vue.component('ordersinfohor-component', require('./components/OrdersinfohorComponent').default);
 Vue.component('activecustomers-component', require('./components/ActivecustomersComponent').default);
 Vue.component('orderdone-component', require('./components/OrdersdoneComponent').default);
+Vue.component('orderprogress-component', require('./components/OrderprogressComponent').default);
+
 
 
 
