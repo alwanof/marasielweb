@@ -19,7 +19,7 @@
 
                     <div class="info-box-content">
                         <a href="drivers/orders/done">
-                            <span class="info-box-text">{{ local[lang+".orders"]["completedorders"] }}</span>
+                            <span class="info-box-text">+{{ local[lang+".orders"]["completedorders"] }}</span>
                         </a>
 
                         <span class="info-box-number">

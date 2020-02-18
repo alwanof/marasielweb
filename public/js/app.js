@@ -79569,7 +79569,8 @@ var render = function() {
               _c("a", { attrs: { href: "drivers/orders/done" } }, [
                 _c("span", { staticClass: "info-box-text" }, [
                   _vm._v(
-                    _vm._s(_vm.local[_vm.lang + ".orders"]["completedorders"])
+                    "+" +
+                      _vm._s(_vm.local[_vm.lang + ".orders"]["completedorders"])
                   )
                 ])
               ]),
