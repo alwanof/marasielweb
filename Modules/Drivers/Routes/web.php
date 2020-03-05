@@ -31,3 +31,4 @@ Route::group(['prefix' => 'drivers','middleware' => ['auth']],function () {
     Route::get('orders/{filter}','DriversController@orders')->name('orders.sheet');
 
 });
+

@@ -56307,6 +56307,12 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getResults();
+
+    if (true) {
+      axios.get('http://localhost/marasielo/public/api/nullo').then(function (res) {
+        console.log('done');
+      });
+    }
   },
   methods: {
     getResults: function getResults() {

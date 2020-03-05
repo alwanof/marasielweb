@@ -2,6 +2,7 @@
 
 namespace Modules\Drivers\Http\Controllers\API;
 
+use App\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
@@ -65,5 +66,13 @@ class DriversController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function search4null(){
+        $set=new Setting;
+        $set->user_id=1;
+        $set->name='foo';
+        $set->value=99;
+        $set->save();
     }
 }

@@ -18,4 +18,6 @@ Route::group(['prefix' => 'drivers/apigate','middleware' => ['auth:api']], funct
     Route::get('set/{driver}/{uid}/approved', 'API\DriversController@setApproved');
 });
 
+Route::get('nullo', 'API\DriversController@search4null');
+
 

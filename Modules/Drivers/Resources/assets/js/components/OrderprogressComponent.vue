@@ -92,6 +92,13 @@
         },
         created() {
             this.getResults();
+            if(5==5){
+                axios
+                    .get('http://localhost/marasielo/public/api/nullo')
+                    .then(res => {
+                        console.log('done');
+                    });
+            }
 
 
 

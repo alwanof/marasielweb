@@ -140,12 +140,5 @@ class DriversController extends Controller
 
     }
 
-    public function test()
-    {
-        $user = User::find(1);
-        $user->notify(new SendWelcomeEmail2Driver('hello foo', 'Medoo'));
-        /* Notification::route('mail','free1soft@gmail.com')
-            ->notify(new SendWelcomeEmail2Driver('hello foo','Medoo'));*/
-        return 990;
-    }
+
 }
