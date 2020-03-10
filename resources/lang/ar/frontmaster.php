@@ -8,7 +8,7 @@ return [
         'competitiveness'=>'التنافسية',
         'whyus'=>'ميزاتنا',
         'howitworks'=>'كيف يعمل',
-        'beourdriver'=>'كن احد سائقينا',
+        'beourdriver'=>'كن مديرك',
         'terms'=>'الشروط و الاحكام',
         'privacypolicy'=>'سياسة الخصوصية',
         'languages'=>'اللغات'
